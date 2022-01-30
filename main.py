@@ -1,4 +1,4 @@
-# This is a sample Python script.
+
 import darklyrics
 from darklyrics import get_lyrics, LyricsNotFound, get_albums, get_songs, get_all_lyrics
 import selenium
@@ -16,14 +16,10 @@ import pandas as pd
 
 
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
-
-
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
+    print(get_lyrics('tormentor', 'slayer'))
+
     # Code to set up Chrome Driver
     url = "http://www.darklyrics.com/"
     PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
@@ -61,13 +57,38 @@ if __name__ == '__main__':
 #for band in band_list:
  #   print(band)
 
-for i in range(len(band_list)):
+#empty data frame
+df = pd.DataFrame(columns = ['BAND', 'SONGS', 'ALL LYRICS'])
+
+for i in range(10):
     try:
         print("BAND NAME: "+ band_list[i])
-        print("LYRICS:")
+
+        darklyrics.get_albums(band_list[i])
+
+        print("SONGS:")
+        print(get_songs(band_list[i]))
+
+        print("ALL LYRICS: ")
         print(get_all_lyrics(band_list[i]))
 
+        df = df.append({'BAND': band_list[i], 'SONGS': get_songs(band_list[i]), 'ALL LYRICS': get_all_lyrics(band_list[i])},
+                       ignore_index=True)
+
+
+
+
+
+
     except:
-        print("lyrics not found")
+        print("Exception: Lyrics not found for "+band_list[i])
+        df = df.append({'BAND': band_list[i], 'SONGS': 'Songs not found', 'ALL LYRICS':'Lyrics not found' }, ignore_index = True)
+
+
+
+
+file_name ='test_a.xlsx'
+  # saving the excel
+df.to_excel(file_name)
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
