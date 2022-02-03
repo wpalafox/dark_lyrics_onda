@@ -58,7 +58,7 @@ if __name__ == '__main__':
  #   print(band)
 
 #empty data frame
-df = pd.DataFrame(columns = ['BAND', 'SONGS', 'ALL LYRICS'])
+df = pd.DataFrame(columns = ['BAND', 'SONG', 'LYRICS'])
 
 for i in range(10):
     try:
@@ -69,10 +69,10 @@ for i in range(10):
         print("SONGS:")
         print(get_songs(band_list[i]))
 
-        print("ALL LYRICS: ")
-        print(get_all_lyrics(band_list[i]))
+        song_list = get_songs(band_list[i])
 
-        df = df.append({'BAND': band_list[i], 'SONGS': get_songs(band_list[i]), 'ALL LYRICS': get_all_lyrics(band_list[i])},
+        for j in range(len(song_list)):
+            df = df.append({'BAND': band_list[i], 'SONG': get_songs(band_list[i]), 'LYRICS': get_lyrics(song_list[j], band_list[i])},
                        ignore_index=True)
 
 
