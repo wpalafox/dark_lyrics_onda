@@ -18,7 +18,7 @@ import pandas as pd
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print(get_lyrics('tormentor', 'slayer'))
+    print(get_albums('A-I-E-A'))
 
     # Code to set up Chrome Driver
     url = "http://www.darklyrics.com/"
@@ -72,8 +72,14 @@ for i in range(10):
         song_list = get_songs(band_list[i])
 
         for j in range(len(song_list)):
-            df = df.append({'BAND': band_list[i], 'SONG': get_songs(band_list[i]), 'LYRICS': get_lyrics(song_list[j], band_list[i])},
+            try:
+                df = df.append({'BAND': band_list[i], 'SONG': song_list[j], 'LYRICS': get_lyrics(song_list[j], band_list[i])},
                        ignore_index=True)
+            except:
+                df = df.append(
+                    {'BAND': band_list[i], 'SONG': song_list[j], 'LYRICS': 'Lyrics not found'},
+                    ignore_index=True)
+
 
 
 
