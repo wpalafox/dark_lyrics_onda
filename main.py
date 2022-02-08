@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 import os
 import time
 import pandas as pd
+import random
 
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
@@ -18,7 +19,7 @@ import pandas as pd
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print(get_albums('A-I-E-A'))
+
 
     # Code to set up Chrome Driver
     url = "http://www.darklyrics.com/"
@@ -60,11 +61,11 @@ if __name__ == '__main__':
 #empty data frame
 df = pd.DataFrame(columns = ['BAND', 'SONG', 'LYRICS'])
 
-for i in range(10):
+for i in range(len(band_list)):
     try:
         print("BAND NAME: "+ band_list[i])
 
-        darklyrics.get_albums(band_list[i])
+
 
         print("SONGS:")
         print(get_songs(band_list[i]))
@@ -75,10 +76,14 @@ for i in range(10):
             try:
                 df = df.append({'BAND': band_list[i], 'SONG': song_list[j], 'LYRICS': get_lyrics(song_list[j], band_list[i])},
                        ignore_index=True)
+                print(get_lyrics(song_list[j], band_list[i]))
+                time.sleep(random.randint(2,5))
             except:
                 df = df.append(
                     {'BAND': band_list[i], 'SONG': song_list[j], 'LYRICS': 'Lyrics not found'},
                     ignore_index=True)
+                print('LYRICS NOT FOUND FOR: '+song_list[j]+' by '+ band_list[i])
+                time.sleep(random.randint(2, 5))
 
 
 
@@ -88,7 +93,7 @@ for i in range(10):
 
     except:
         print("Exception: Lyrics not found for "+band_list[i])
-        df = df.append({'BAND': band_list[i], 'SONGS': 'Songs not found', 'ALL LYRICS':'Lyrics not found' }, ignore_index = True)
+        df = df.append({'BAND': band_list[i], 'SONGS': 'Songs not found', 'LYRICS':'Lyrics not found' }, ignore_index = True)
 
 
 
